@@ -40,15 +40,23 @@ function install_jupyterhub() {
     mkdir -p /opt/jupyterhub
     virtualenv /opt/jupyterhub/venv --python /usr/bin/python3
     source /opt/jupyterhub/venv/bin/activate
-    pip install -r requirements.txt
+    pip install jupyterhub 
+    pip install --upgrade notebook
+    pip install "dask[distributed,dataframe]" dask_labextension
 }
 
+function install_service() {
+    cp jupyterhub.service /etc/systemd/system/jupyterhub.service
+    systemctl daemon-reload
+    systemctl start jupyterhub
+}
 
 function main() {
     validate_root_user
     install_nodejs_and_dependencies
     install_virtual_env
     install_jupyterhub
+    install_service
 }
 
 main "$@"
