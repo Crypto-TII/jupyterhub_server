@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install nodejs
-
-
 function print_error_message() {
   local message=$1
   echo -e "${COLOR_RED}${message}${COLOR_NONE}"
