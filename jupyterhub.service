@@ -1,0 +1,48 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          jupyterhub
+# Required-Start:    nginx
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: runs jupyterhub
+# Description:       The gunicorn process that receives HTTP requests
+#                    from nginx
+#
+### END INIT INFO
+#
+#
+APPNAME=jupyterhub
+ACTIVATE=/opt/jupyterhub/venv/bin/activate
+DAEMON=jupyterhub
+PIDFILE=/var/run/jupyterhub.pid
+LOGFILE=/var/log/$DAEMON.log
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+        log_daemon_msg "Starting deferred execution scheduler" "$APPNAME"
+        source $ACTIVATE
+	$DAEMON --ip 0.0.0.0 --port=8000 
+        log_end_msg $?
+    ;;
+  stop)
+        log_daemon_msg "Stopping deferred execution scheduler" "$APPNAME"
+        killproc -p $PIDFILE $DAEMON
+        log_end_msg $?
+    ;;
+  force-reload|restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    status_of_proc -p $PIDFILE $DAEMON && exit 0 || exit $?
+    ;;
+  *)
+    echo "Usage: /etc/init.d/$APPNAME {start|stop|restart|force-reload|status}"
+    exit 1
+    ;;
+esac
+
+exit 0
