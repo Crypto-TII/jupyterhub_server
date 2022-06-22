@@ -1,5 +1,12 @@
 #!/bin/bash
 
+readonly COLOR_RED="\033[0;31m"
+readonly COLOR_YELLOW="\033[1;33m"
+readonly COLOR_GREEN="\033[0;32m"
+readonly COLOR_CYAN="\033[0;36m"
+readonly COLOR_NONE="\e[0m"
+readonly COLOR_WHITE="\033[1;37m"
+
 function print_error_message() {
   local message=$1
   echo -e "${COLOR_RED}${message}${COLOR_NONE}"
@@ -44,6 +51,7 @@ function install_jupyterhub() {
 
 function install_service() {
     cp jupyterhub.service /etc/systemd/system/jupyterhub.service
+    cp jupyterhub_config.py /opt/jupyterhub/
     systemctl daemon-reload
     systemctl start jupyterhub
 }
