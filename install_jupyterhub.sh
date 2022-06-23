@@ -2,10 +2,7 @@
 
 readonly COLOR_RED="\033[0;31m"
 readonly COLOR_YELLOW="\033[1;33m"
-readonly COLOR_GREEN="\033[0;32m"
-readonly COLOR_CYAN="\033[0;36m"
 readonly COLOR_NONE="\e[0m"
-readonly COLOR_WHITE="\033[1;37m"
 
 function print_error_message() {
   local message=$1
@@ -15,13 +12,9 @@ function print_error_message() {
 
 function print_status_message() {
   local message=$1
-  echo -e "\t => ${COLOR_LIGHT_GRAY}${message}...${COLOR_NONE}"
+  echo -e "\t => ${COLOR_YELLOW}${message}...${COLOR_NONE}"
 }
 
-function print_message() {
-  local message=$1
-  echo -e "\t => ${COLOR_NONE}${message}${COLOR_NONE}"
-}
 
 function validate_root_user() {
     if [[ "${EUID}" -ne 0 ]]; then
@@ -59,7 +52,6 @@ function install_service() {
 function main() {
     validate_root_user
     install_nodejs_and_dependencies
-    install_virtual_env
     install_jupyterhub
     install_service
 }
