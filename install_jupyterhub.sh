@@ -24,22 +24,16 @@ function validate_root_user() {
 
 function install_nodejs_and_dependencies() {
     print_status_message "Installing nodejs"
-    apt-get update
-    apt-get install curl virtualenv -y
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-    apt-get update
-    apt-get install nodejs -y
+    wget https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-x64.tar.xz
+    tar xfv node-v16.16.0-linux-x64.tar.xz -C /opt/
+    export PATH=/opt/node-v16.16.0-linux-x64/bin:$PATH
     npm install -g configurable-http-proxy
+    rm node-v16.16.0-linux-x64.tar.xz
 }
 
 function install_jupyterhub() {
     print_status_message "Installing jupyterhub"
-    mkdir -p /opt/jupyterhub
-    virtualenv /opt/jupyterhub/venv --python /usr/bin/python3
-    source /opt/jupyterhub/venv/bin/activate
-    pip install jupyterhub 
-    pip install --upgrade notebook
-    pip install "dask[distributed,dataframe]" dask_labextension
+    /home/anna/miniconda3/envs/E2202/bin/pip install jupyterhub
 }
 
 function install_service() {

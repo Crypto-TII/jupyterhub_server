@@ -1,10 +1,10 @@
 [Unit]
-Description=JupyterHub
+Description=JupyterHub with E2202 conda environment
 After=syslog.target network.target
 
 [Service]
-Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/venv/bin"
-ExecStart=/opt/jupyterhub/venv/bin/jupyterhub --ip=0.0.0.0 --port=8000 --no-ssl
+Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/node-v16.16.0-linux-x64/bin:/home/anna/miniconda3/envs/E2202/bin"
+ExecStart=/home/anna/miniconda3/envs/E2202/bin/jupyterhub --ip=0.0.0.0 --port=8000 --no-ssl
 
 [Install]
 WantedBy=multi-user.target
