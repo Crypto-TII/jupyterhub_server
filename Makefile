@@ -1,5 +1,5 @@
 install-nodejs:
-	sudo bash install_nodejs.sh
+	sudo bash ./bash_scripts/install_nodejs.sh
 
 create-environment:
 	sudo apt-get update && sudo apt-get install virtualenv -y

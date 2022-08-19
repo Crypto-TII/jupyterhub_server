@@ -6,5 +6,6 @@ Scripts to create and start jupyterhub services with multiple conda enviroments 
 make install-nodejs
 make create-environment
 make create-files
-cd output && sudo bash start_services.sh
+make start-services
+make check-services
 ```
