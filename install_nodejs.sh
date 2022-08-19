@@ -31,23 +31,9 @@ function install_nodejs_and_dependencies() {
     rm node-v16.16.0-linux-x64.tar.xz
 }
 
-function install_jupyterhub() {
-    print_status_message "Installing jupyterhub"
-    /home/anna/miniconda3/envs/E2202/bin/pip install jupyterhub
-}
-
-function install_service() {
-    cp jupyterhub.service /etc/systemd/system/jupyterhub.service
-    cp jupyterhub_config.py /opt/jupyterhub/
-    systemctl daemon-reload
-    systemctl start jupyterhub
-}
-
 function main() {
     validate_root_user
     install_nodejs_and_dependencies
-    install_jupyterhub
-    install_service
 }
 
 main "$@"

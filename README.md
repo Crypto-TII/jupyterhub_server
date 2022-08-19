@@ -1,7 +1,10 @@
 # jupyterhub_server
-Scripts to install jupyterhub server 🚀
+Scripts to create and start jupyterhub services with multiple conda enviroments 🚀
 
-### Install the dependencies and systemd service
+### Run the following commands with make
 ```bash
-$ sudo bash ./install_jupyterhub.sh
+make install-nodejs
+make create-environment
+make create-files
+cd output && sudo bash start_services.sh
 ```
