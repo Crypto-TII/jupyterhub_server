@@ -24,11 +24,15 @@ function validate_root_user() {
 
 function install_nodejs_and_dependencies() {
     print_status_message "Installing nodejs"
-    wget https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-x64.tar.xz
-    tar xfv node-v16.16.0-linux-x64.tar.xz -C /opt/
-    export PATH=/opt/node-v16.16.0-linux-x64/bin:$PATH
-    npm install -g configurable-http-proxy
-    rm node-v16.16.0-linux-x64.tar.xz
+    if [[ ! -d "/opt/node-v16.16.0-linux-x64" ]]; then
+      wget https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-x64.tar.xz
+      tar xfv node-v16.16.0-linux-x64.tar.xz -C /opt/
+      export PATH=/opt/node-v16.16.0-linux-x64/bin:$PATH
+      npm install -g configurable-http-proxy
+      rm node-v16.16.0-linux-x64.tar.xz
+    else
+      print_status_message "Nodejs is already installed"
+    fi
 }
 
 function main() {
