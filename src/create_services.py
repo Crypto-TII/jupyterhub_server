@@ -36,6 +36,7 @@ class CreateServices:
             self.sfc.create_file(jupyter_service_file, data)
             services_vars['jupyter_service_file'] = jupyter_service
             services_vars["opt_path"] = config["config_file_path"]
+            services_vars["conda_path"] = config["conda_path"]
 
             api_port = base_port + 1
             port = base_jup_port + 1

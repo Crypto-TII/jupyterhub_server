@@ -16,7 +16,7 @@ Description={{ description }}
 After=syslog.target network.target
 
 [Service]
-Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/node-v16.16.0-linux-x64/bin"
 ExecStart=/opt/node-v16.16.0-linux-x64/bin/configurable-http-proxy --ip=0.0.0.0 --port {{ port }} --api-ip 127.0.0.1 --api-port {{ api_port }} --error-target http://0.0.0.0:{{ jup_port }}/hub/error
 
 [Install]
@@ -36,6 +36,7 @@ c.JupyterHub.hub_port = {{ port }}
 
 START_SERVICES_SCRIPT="""#/bin/bash
 {% for service in services %}
+sudo {{ service.conda_path }}/bin/pip install jupyterhub jupyterlab 
 sudo cp -v {{ service.http_service_file }} /etc/systemd/system/
 sudo cp -v {{ service.jupyter_service_file }} /etc/systemd/system/
 sudo cp -v {{ service.config_file }} {{ service.opt_path }}/
