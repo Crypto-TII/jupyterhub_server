@@ -36,16 +36,20 @@ c.JupyterHub.hub_port = {{ port }}
 
 START_SERVICES_SCRIPT="""#/bin/bash
 {% for service in services %}
-sudo {{ service.conda_path }}/bin/pip install jupyterhub jupyterlab 
-sudo cp -v {{ service.http_service_file }} /etc/systemd/system/
-sudo cp -v {{ service.jupyter_service_file }} /etc/systemd/system/
-sudo cp -v {{ service.config_file }} {{ service.opt_path }}/
+if [[ -d {{ service.conda_path }} ]]; then
+  sudo {{ service.conda_path }}/bin/pip install jupyterhub jupyterlab 
+  sudo cp -v {{ service.http_service_file }} /etc/systemd/system/
+  sudo cp -v {{ service.jupyter_service_file }} /etc/systemd/system/
+  sudo cp -v {{ service.config_file }} {{ service.opt_path }}/
+fi 
 {% endfor %}
 sudo systemctl daemon-reload
 {% for service in services %}
-sudo systemctl start {{ service.http_service_file }}
-sudo systemctl status {{ service.http_service_file }} >> services_output.txt
-sudo systemctl start {{ service.jupyter_service_file }}
-sudo systemctl status {{ service.jupyter_service_file }} >> services_output.txt
+if [[ -d {{ service.conda_path }} ]]; then
+  sudo systemctl start {{ service.http_service_file }}
+  sudo systemctl status {{ service.http_service_file }} >> services_output.txt
+  sudo systemctl start {{ service.jupyter_service_file }}
+  sudo systemctl status {{ service.jupyter_service_file }} >> services_output.txt
+fi
 {% endfor %}
 """
